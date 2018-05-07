@@ -1,0 +1,9 @@
+<h1>Iron Movies</h1>
+
+<div class="container">
+  <a [routerLink]="['movies/create']">Create new!</a>
+  <div *ngFor="let movie of movies">
+    <app-movie-card [movie]="movie"></app-movie-card>
+    <a [routerLink]="['movies', movie._id]">Detail</a>
+  </div>
+</div>

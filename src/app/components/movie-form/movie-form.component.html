@@ -1,0 +1,42 @@
+<div class="container">
+
+  <form (submit)="submitForm(form)" #form="ngForm" novalidate [ngClass]="{'is-processing': processing}">
+
+    <div class="field" [ngClass]="{'has-error': feedbackEnabled && titleField.errors}">
+      <label>Title</label>
+      <input type="text" name="title" [(ngModel)]="movie.title" #titleField="ngModel" required [disabled]="processing"
+      />
+      <div *ngIf="feedbackEnabled && titleField.errors">
+        <p *ngIf="titleField.errors.required" class="validation">title required</p>
+        <p *ngIf="titleField.errors.minlength" class="validation">title is too short</p>
+      </div>
+    </div>
+
+    <div class="field" [ngClass]="{'has-error': feedbackEnabled && yearField.errors}">
+      <label>Year</label>
+      <input type="number" name="year" [(ngModel)]="movie.year" #yearField="ngModel" required [disabled]="processing" />
+      <div *ngIf="feedbackEnabled && yearField.errors">
+        <p *ngIf="yearField.errors.required" class="validation">year required</p>
+        <p *ngIf="yearField.errors.minlength" class="validation">year is too short</p>
+      </div>
+    </div>
+
+    <div class="field" [ngClass]="{'has-error': feedbackEnabled && imageField.errors}">
+      <label>Image</label>
+      <input type="text" name="image" [(ngModel)]="movie.posterUrl" #imageField="ngModel" required [disabled]="processing"
+      />
+      <div *ngIf="feedbackEnabled && imageField.errors">
+        <p *ngIf="imageField.errors.required" class="validation">image required</p>
+        <p *ngIf="imageField.errors.minlength" class="validation">image is too short</p>
+      </div>
+    </div>
+
+    <div class="field submit">
+      <button type="submit" [disabled]="processing">Create</button>
+      <div *ngIf="feedbackEnabled && form.invalid">
+        <p class="validation">there are errors in the form, please review the fields</p>
+      </div>
+    </div>
+  </form>
+
+</div>
