@@ -25,12 +25,30 @@ export class MovieService {
     .toPromise();
   }
 
-  create(movie: Object) {
+  create(movie: Object): Promise<any> {
     const options = {
       withCredentials: true
     };
     return this.httpClient.post(`${this.baseUrl}/movies`, movie, options)
       .toPromise();
+  }
+
+  update(movie: any): Promise<any> {
+    const options = {
+      withCredentials: true
+    };
+
+    return this.httpClient.put(`${this.baseUrl}/movies/${movie._id}`, movie, options)
+    .toPromise();
+  }
+
+  deleteMovie(id){
+    const options = {
+      withCredentials: true
+    };
+
+    return this.httpClient.delete(`${this.baseUrl}/movies/${id}`, options)
+    .toPromise();
   }
 
 }

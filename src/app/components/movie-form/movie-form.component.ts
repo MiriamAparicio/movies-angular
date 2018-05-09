@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-movie-form',
@@ -10,12 +11,16 @@ import { Router } from '@angular/router';
 
 export class MovieFormComponent implements OnInit {
 
-  feedbackEnabled = false;
-  error = null;
-  processing = false;
-  movie: Object = {};
+  @Input() feedbackEnabled: boolean;
+  @Input() error: string;
+  @Input() processing: boolean;
+  @Input() movie: any;
 
-  constructor(private movieService: MovieService, private router: Router) { }
+  @Output() submitData: EventEmitter<any> = new EventEmitter();
+
+  constructor(private movieService: MovieService, private router: Router) {
+    this.movie = {};
+   }
 
   ngOnInit() {
   }
@@ -25,19 +30,11 @@ export class MovieFormComponent implements OnInit {
     this.feedbackEnabled = true;
     if (form.valid) {
       this.processing = true;
-      this.movieService.create(this.movie)
-        .then((result) => {
-          this.router.navigate(['/']);
-            //... handle result, reset form, etc...
-            //... navigate with this.router.navigate(['...'])
-            //... maybe turn this to false if your're staying on the page - this.processing = false;
-         })
-         .catch((err) => {
-           this.error = err.error.error;
-           this.processing = false;
-           this.feedbackEnabled = false;
-         });
+      this.submitData.emit(this.movie);
     }
   }
 
 }
+
+
+// "https://ia.media-imdb.com/images/M/MV5BMjQ1MzcxNjg4N15BMl5BanBnXkFtZTgwNzgwMjY4MzI@._V1_UX182_CR0,0,182,268_AL_.jpg/https://ia.media-imdb.com/images/M/MV5BMjQ1MzcxNjg4N15BMl5BanBnXkFtZTgwNzgwMjY4MzI@._V1_UX182_CR0,0,182,268_AL_.jpg"

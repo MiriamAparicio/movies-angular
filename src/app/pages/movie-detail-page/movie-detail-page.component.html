@@ -1,3 +1,11 @@
-<div class="container">
-  <app-movie-card [movie]="movie"></app-movie-card>
-</div>
+<ng-container *ngIf="!movie">
+  Loading
+</ng-container>
+
+<ng-container *ngIf="movie">
+  <div class="container">
+    <app-movie-card [movie]="movie"></app-movie-card>
+    <a [routerLink]="['/movies', movie._id, 'edit']">Edit</a>
+    <button (click)="delete()">Delete</button>
+  </div>
+</ng-container>

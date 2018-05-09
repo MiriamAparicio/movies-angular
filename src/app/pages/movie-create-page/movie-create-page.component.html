@@ -1,2 +1,10 @@
 
-<app-movie-form></app-movie-form>
+<app-movie-form 
+[feedbackEnabled]="feedbackEnabled" 
+[processing]="processing" 
+[error]="error"
+(submitData)="hadleSubmitForm($event)">
+</app-movie-form>
+<div class="field" *ngIf="error">
+  <p class="validation">{{error}}</p>
+</div>

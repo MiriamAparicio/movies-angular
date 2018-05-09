@@ -1,0 +1,17 @@
+<ng-container *ngIf="!movie">
+  Loading
+</ng-container>
+
+<ng-container *ngIf="movie">
+
+  <app-movie-form 
+    [movie]="movie" 
+    [feedbackEnabled]="feedbackEnabled" 
+    [processing]="processing" 
+    [error]="error" 
+    (submitData)="hadleSubmitForm($event)">
+  </app-movie-form>
+  <div class="field" *ngIf="error">
+    <p class="validation">{{error}}</p>
+  </div>
+</ng-container>

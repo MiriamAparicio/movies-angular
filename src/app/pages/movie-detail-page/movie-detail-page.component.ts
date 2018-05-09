@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MovieService } from '../../services/movie.service';
 
@@ -8,20 +8,32 @@ import { MovieService } from '../../services/movie.service';
   templateUrl: './movie-detail-page.component.html',
   styleUrls: ['./movie-detail-page.component.css']
 })
+
 export class MovieDetailPageComponent implements OnInit {
   
   movie: Object;
+  idMovie: string;
 
-  constructor(private movieService: MovieService, private route: ActivatedRoute) { }
+  constructor(private movieService: MovieService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.params
       .subscribe((params) => {
-        this.movieService.getOne(params.id)
+        this.idMovie = params.id;
+        this.movieService.getOne(this.idMovie)
           .then(data => {
             this.movie = data
           });
       });
+  }
+
+  delete() {
+    this.movieService.deleteMovie(this.idMovie)
+    .then(() => {
+      this.router.navigate(['/']);
+    })
+      .catch((err) => {
+    });
   }
 
 }

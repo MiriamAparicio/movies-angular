@@ -2,7 +2,20 @@
   <div class="container">
 
     <nav class="site-nav">
-      <h2><a [routerLink]="['/']">Home</a></h2>
+      <a [routerLink]="['/']">Home</a>
+      <div [ngClass]="{'is-user': user, 'is-anon': anon}">
+        <div *ngIf="loading">
+          <span class="username text">loading...</span>
+        </div>
+        <div *ngIf="!loading && !!user">
+          <a [routerLink]="['/profile']">{{user.username}}</a>
+          <a (click)="logout()">Logout</a>
+        </div>
+        <div *ngIf="!loading && anon">
+          <a [routerLink]="['/login']">Login</a>
+          <a [routerLink]="['/signup']">Signup</a>
+        </div>
+      </div>
     </nav>
 
   </div>
